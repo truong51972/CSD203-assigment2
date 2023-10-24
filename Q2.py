@@ -121,32 +121,37 @@ class BSTree:
                 mq.enQueue(p.right)
 
     # find the maximum depth or height of a tree
-    # def maxDepth(self,node):
+    def maxDepth(self,node):
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
-        
-        
+        if node == None: return 0
+        return max(self.maxDepth(node.left), self.maxDepth(node.right)) + 1
 
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------   
     
     # perform the Post-Order traverse on the BST, but ONLY 
     # visit nodes that has TShirt's price lager than 3.
-    # def postOrder2(self,p):
+    def postOrder2(self,p):
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
         
-        
+        if p==None:
+            return
+        self.postOrder2(p.left)
+        self.postOrder2(p.right)
+        if p.data.price > 3:
+            self.visit(p)
 
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
     
-    # def postVisit2(self):
+    def postVisit2(self):
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
         
-        
-
+        self.postOrder2(self.root)
+        print()
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
     
@@ -162,22 +167,36 @@ class BSTree:
         
     # decrease the TShirt's price of all Nodes that have 
     # style = 'LINE' by 1       
-    # def updateTShist(self):
+    def updateTShist(self):
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
         
-        
+        if self.isEmpty():
+            return
+        mq = MyQueue()
+        mq.enQueue(self.root)
+        while not mq.isEmpty():
+            p = mq.deQueue()
+            if (p.data.style == 'LINE'): p.data.price -= 1
+            # self.visit(p)
+            if p.left!=None:
+                mq.enQueue(p.left)
+            if p.right!=None:
+                mq.enQueue(p.right)
 
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
     
     # remove all nodes that are leaves of given BST
-    # def deleteLeaf(self,node):
-        # ------------------------------------------------------------------------------
-        # -------------------------- Start your code here ------------------------------
-        
-        
+    def deleteLeaf(self,node):
 
+        if node == None: return
+        if node.left == node.left == None:
+            return None
+        node.left = self.deleteLeaf(node.left)
+        node.right = self.deleteLeaf(node.right)
+
+        return node
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
 
@@ -199,8 +218,7 @@ class BSTree:
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
         
-        
-
+        print(self.maxDepth(self.root))
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
     
@@ -225,7 +243,7 @@ class BSTree:
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
         
-        
+        self.postVisit2()
         
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
@@ -252,9 +270,10 @@ class BSTree:
         """
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
-
-        
-
+        k = self.maxDepth(self.root)
+        newTShirt = TShirt(sku = '0111-1', 
+            style = 'BLOKECORE', size = 'M-L-XL', color = 'GRAY-BLACK', price = k)
+        self.insert(newTShirt)
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
         self.preVisit()
@@ -280,9 +299,9 @@ class BSTree:
         """
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
-
         
-
+        self.updateTShist()
+        
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
         self.breadth_first()
@@ -304,6 +323,8 @@ class BSTree:
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
 
+        self.deleteLeaf(self.root)
+        # self.root = self.deleteLeaf(self.root)
 
         # -------------------------- End your code here --------------------------------
         # ------------------------------------------------------------------------------
