@@ -272,7 +272,7 @@ class BSTree:
         """
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
-        k = self.maxDepth(self.root)
+        k = self.size(self.root)
         newTShirt = TShirt(sku = '0111-1', 
             style = 'BLOKECORE', size = 'M-L-XL', color = 'GRAY-BLACK', price = k)
         self.insert(newTShirt)
