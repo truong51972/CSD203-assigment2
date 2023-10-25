@@ -156,10 +156,12 @@ class BSTree:
         # ------------------------------------------------------------------------------
     
     # compute number of nodes in tree
-    # def size(self,node):
+    def size(self,node):
         # ------------------------------------------------------------------------------
         # -------------------------- Start your code here ------------------------------
-        
+        if node is None: return 0
+        else:
+            return (self.size(node.left) + self.size(node.right) + 1)
         
 
         # -------------------------- End your code here --------------------------------
